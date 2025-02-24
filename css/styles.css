@@ -1,41 +1,268 @@
-body {
-  background-color: #21222c;
-}
-
-/* 👇👇👇 Paste the styles of your Fancy Robot from the "Position it right" assignment here 👇👇👇 */
-
 .robot-container {
+  position: relative;
+  display: flex;
+  align-self: center;
+  width: 800px;
+  height: 800px;
+  background-color: #cf4647;
 }
 
 .robot-face-shape {
+  position: relative;
+  --d: 3rem;
+  height: 300px;
+  padding: 10px;
+  aspect-ratio: 1;
+  box-sizing: border-box;
+  border: groove #0000;
+  border-width: var(--d) var(--d) 0 0;
+  border-radius: 10%;
+  clip-path: polygon(
+    0 100%,
+    calc(100% - var(--d)) 100%,
+    100% calc(100% - var(--d)),
+    100% 0,
+    var(--d) 0,
+    0 var(--d) inset(45% 45% 45% 45% round 10px)
+  );
+  margin: auto;
+  background: conic-gradient(
+      from 45deg at calc(100% - var(--d)) var(--d),
+      #0004 38.5%,
+      #0000 0 62.5%,
+      #0008 0
+    )
+    border-box #9cc4e4; /* the color */
+}
+
+.robot-eye1 {
+  position: absolute;
+  left: 20px;
+  rotate: -45deg;
+  height: 75px; /* control the size */
+  aspect-ratio: 2/3;
+  mask: conic-gradient(
+        from -30deg at bottom,
+        #0000,
+        #000 1deg 59deg,
+        #0000 60deg
+      )
+      bottom/100% 50% no-repeat,
+    radial-gradient(
+      circle at 50% calc(100% / 3),
+      #0000 21.5%,
+      #000 22% 44%,
+      #0000 44.5%
+    );
+  background-image: radial-gradient(red, #13961e);
+}
+
+.robot-eye2 {
+  rotate: 45deg;
+  height: 75px; /* control the size */
+  aspect-ratio: 2/3;
+  mask: conic-gradient(
+        from -30deg at bottom,
+        #0000,
+        #000 1deg 59deg,
+        #0000 60deg
+      )
+      bottom/100% 50% no-repeat,
+    radial-gradient(
+      circle at 50% calc(100% / 3),
+      #0000 21.5%,
+      #000 22% 44%,
+      #0000 44.5%
+    );
+  background-image: radial-gradient(red, #13961e);
 }
 
 .robot-eye-left {
+  position: absolute;
+  left: 20px;
+  animation: lEyefreak 5s infinite;
 }
 
 .robot-eye-right {
+  position: absolute;
+  left: 150px;
+  animation: eyeBlink 5s infinite;
 }
 
 .robot-ear-left {
+  position: absolute;
+  left: 253px;
+  top: 50px;
+  --b: 3px; /* border thickness */
+  --s: 45px; /* preferred size shape */
+  --c: #7a614b;
+
+  width: round(var(--s), 4 * var(--b));
+  aspect-ratio: 1;
+  border-radius: 50%;
+  background: repeating-radial-gradient(
+        calc(2 * var(--b)) at top,
+        #0000 -1px,
+        var(--c) 0 calc(50% - 1px),
+        #0000 50% calc(100% - 1px)
+      )
+      calc(50% + var(--b)) 100%,
+    repeating-radial-gradient(
+        calc(2 * var(--b)) at bottom,
+        var(--c) -1px,
+        #0000 0 calc(50% - 1px),
+        var(--c) 50% calc(100% - 1px)
+      )
+      50% 0;
+  background-size: 150% 50%;
+  background-repeat: no-repeat;
 }
 
-.robot-ear-right {
+.ear-dangle {
+  position: absolute;
+  top: 36px;
+  left: 21px;
+  --r: 15px; /* control the size */
+  --c1: #fd99d7;
+  --c2: #4e4cb0;
+  height: calc(2 * var(--r));
+  aspect-ratio: 1;
+  clip-path: ellipse(7px 14px at 50% 50%);
+  display: flex;
+  animation: dangleSpin 2s infinite;
+}
+
+.ear-dangle:before,
+.ear-dangle:after {
+  content: "";
+  flex: 1;
+  --g1: radial-gradient(50% 50%, var(--c1) 99%, #0000) no-repeat;
+  --g2: radial-gradient(50% 50%, var(--c2) 99%, #0000) no-repeat;
+  background: var(--g1) calc(sin(60deg) * var(--r)) calc(var(--r) / -2),
+    var(--g2) calc(var(--r) / 2) calc(sin(-60deg) * var(--r)),
+    var(--g1) 0 calc(-1 * var(--r)),
+    var(--g2) calc(var(--r) / -2) calc(sin(-60deg) * var(--r)),
+    var(--g1) calc(sin(-60deg) * var(--r)) calc(var(--r) / -2),
+    var(--g2) calc(-1 * var(--r)) 0,
+    var(--g1) calc(sin(-60deg) * var(--r)) calc(var(--r) / 2);
+  background-size: 200%;
+}
+.ear-dangle:after {
+  rotate: 180deg;
 }
 
 .robot-nose {
-}
-
-.robot-nose:before {
-}
-
-.robot-nose:after {
+  --n: 4; /* number of bars */
+  position: absolute;
+  left: 110px;
+  top: 100px;
+  height: 30px;
+  aspect-ratio: 1;
+  border-radius: 50%;
+  --s: calc(100% / (2 * var(--n) - 1));
+  background: repeating-radial-gradient(
+    50% 50%,
+    #0000 0,
+    #178feb 1px calc(var(--s) - 1px),
+    #0000 var(--s) calc(2 * var(--s))
+  );
+  mask: conic-gradient(#000 0 0) no-repeat 50% / var(--s) var(--s),
+    conic-gradient(
+      from -45deg at 50% calc(50% + var(--s) / 2),
+      #000 90deg,
+      #0000 0
+    );
+  animation: noseLight 5s infinite;
 }
 
 .robot-teeth {
+  background-image: url(../assets/tentacle-mouth.png);
+  background-position: center;
+  background-size: contain;
+  position: relative;
+  box-sizing: border-box;
+  top: 130px;
+  left: 15px;
+  width: 200px;
+  height: 100px;
 }
 
-.robot-tooth {
+.robot-teeth-top {
+  background: #cf4647;
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  border: 3px solid black;
+  clip-path: polygon(0 0, 100% 0, 100% 50%, 50% calc(100% - 70px), 0 50%);
+}
+
+.robot-teeth-bottom {
+  background-color: #4e4cb0;
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  border: 3px solid black;
+  clip-path: polygon(0 53%, 50% 35%, 100% 53%, 100% 100%, 0 100%);
+  animation: myChew 5s infinite;
 }
 
 .robot-hair-style {
+  position: absolute;
+  top: 100px;
+  left: 250px;
+  background-color: #da6630;
+  height: 200px;
+  width: 300px;
+}
+
+.robot-hair-one {
+  position: absolute;
+  top: 100px;
+  left: 350px;
+  background-color: #e77e2f;
+  width: 200px; /* adjust to control the size */
+  aspect-ratio: 1;
+  --g: /16.324% 16.324% radial-gradient(#000 calc(71% - 1px), #0000 71%) no-repeat;
+  mask: 100% 50% var(--g), 96.194% 69.134% var(--g), 85.355% 85.355% var(--g),
+    69.134% 96.194% var(--g), 50% 100% var(--g), 30.866% 96.194% var(--g),
+    14.645% 85.355% var(--g), 3.806% 69.134% var(--g), 0% 50% var(--g),
+    3.806% 30.866% var(--g), 14.645% 14.645% var(--g), 30.866% 3.806% var(--g),
+    50% 0% var(--g), 69.134% 3.806% var(--g), 85.355% 14.645% var(--g),
+    96.194% 30.866% var(--g),
+    radial-gradient(100% 100%, #000 41.034%, #0000 calc(41.034% + 1px));
+}
+
+.robot-hair-one:hover {
+  animation: hairHover 3s;
+}
+
+.robot-hair-two {
+  position: absolute;
+  top: 100px;
+  left: 250px;
+  rotate: 180deg;
+  --c: 70px; /* control the curvature (works with percentage) */
+  height: 200px;
+  width: 250px;
+  aspect-ratio: 3/2;
+  /* you can also update the 60%  */
+  mask: radial-gradient(60% var(--c) at bottom, #0000 calc(100% - 2px), #000);
+  background: #a7552f;
+}
+
+.robot-hair-three {
+  position: absolute;
+  top: 100px;
+  left: 269px;
+  --p: 69px; /* control the shape (can be percentage) */
+  height: 248px;
+  aspect-ratio: 3/2;
+  clip-path: polygon(
+    44% 50%,
+    var(--p) 68%,
+    calc(94% - var(--p)) -0%,
+    76% 179%,
+    61% 86%
+  );
+  background: #723a20;
 }
